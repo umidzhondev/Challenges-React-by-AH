@@ -1,9 +1,17 @@
-import './App.css';
-import Heading from './components/Heading';
+import "./App.css";
+import Card from "./components/Card";
+import movies from "./movies";
 
 function App() {
   return (
-    <Heading/>
+    <div className="container">
+      <h1 className="heading">My movies</h1>
+      <div className="cards">
+        {movies.map((movie, index) => {
+          return <Card key={index} props={movie} />;
+        })}
+      </div>
+    </div>
   );
 }
 
