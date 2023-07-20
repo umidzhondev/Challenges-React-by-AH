@@ -110,69 +110,89 @@ body {
   align-items: center;
   justify-content: center;
   gap: 20px;
-
 }
 
 @media (max-width: 780px) {
-  .stopwatch__header-item{
+  .stopwatch__header-item {
     width: 98px;
     font-size: 4em;
   }
-  .stopwatch{
+  .stopwatch {
     width: max-content;
   }
 }
 @media (max-width: 600px) {
-  .stopwatch__header-item{
+  .stopwatch__header-item {
     width: 98px;
     font-size: 4em;
   }
-  .title{
+  .title {
     font-size: 43px !important;
   }
-  .stopwatch{
+  .stopwatch {
     width: 90%;
     margin-inline: auto;
   }
-  .stopwatch__header-item{
+  .stopwatch__header-item {
     flex: 1;
     font-size: 2em;
   }
-  .stopwatch__header span{
+  .stopwatch__header span {
     font-size: 3em;
   }
-  .stopwatch__header{
+  .stopwatch__header {
     width: 98%;
-    margin-inline:auto
+    margin-inline: auto;
   }
-  .stopwatch__interval-item{
+  .stopwatch__interval-item {
     font-size: 16px;
   }
 }
 @media (max-width: 490px) {
-  .stopwatch__header-item{
+
+  .title {
+    font-size: 36px !important;
+  }
+  .stopwatch__header-item {
+    font-size: 20px !important;
+  }
+  .stopwatch__header span {
+    font-size: 1.5em;
+  }
+  .stopwatch__interval-item {
+    font-size: 14px;
+  }
+  .stopwatch__buttons{
+    flex-wrap: wrap;
+    padding-inline: 10px;
+  }
+  .stopwatch__intervals::-webkit-scrollbar {
+    width: 2px;
+    height: 3px;
+    padding-bottom: 10px;
+  }
+  .stopwatch__intervals::-webkit-scrollbar-thumb {
+    background: #f9d924;
+  }
+}
+@media (max-width: 380px) {
+  .stopwatch__header-item {
     width: 98px;
     font-size: 4em;
   }
-  .title{
-    font-size: 43px !important;
+  .title {
+    font-size: 30px !important;
   }
-  .stopwatch{
-    width: 90%;
-    margin-inline: auto;
+  
+  .stopwatch__header {
+   padding: 20px 0;
   }
-  .stopwatch__header-item{
-    flex: 1;
-    font-size: 2em;
+  
+  .stopwatch__buttons{
+   justify-content: flex-start;
   }
-  .stopwatch__header span{
-    font-size: 3em;
+  .stopwatch__intervals::-webkit-scrollbar {
+    height: 2px;
   }
-  .stopwatch__header{
-    width: 98%;
-    margin-inline:auto
-  }
-  .stopwatch__interval-item{
-    font-size: 16px;
-  }
+
 }

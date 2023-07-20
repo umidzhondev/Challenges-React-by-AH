@@ -2,9 +2,9 @@ import React from "react";
 
 class App extends React.Component {
   state = {
-    second: 11,
-    minute: 12,
-    hour: 12,
+    second: 0,
+    minute: 0,
+    hour: 0,
     timeInterval: "",
     startIsDisabled: false,
     intervals: [],
