@@ -1,119 +1,148 @@
-import React from "react";
+import React, { Component } from "react";
+import User from "./components/User";
 
-class App extends React.Component {
+class App extends Component {
   state = {
-    second: 0,
-    minute: 0,
-    hour: 0,
-    timeInterval: "",
-    startIsDisabled: false,
-    intervals: [],
+    users: [],
+    name: "",
+    model: "",
+    number: "",
   };
 
-  clickStart = () => {
-    this.setState({ startIsDisabled: true });
-    let timeInterval = setInterval(() => {
-      const { second, minute, hour } = this.state;
-      if (second === 59) {
-        if (minute === 59) {
-          this.setState({
-            minute: 0,
-            hour: hour + 1,
-          });
-        } else {
-          this.setState({
-            second: 0,
-            minute: minute + 1,
-          });
-        }
-      } else {
-        this.setState({
-          second: second + 1,
-        });
-      }
-    }, 100);
-    this.setState({ timeInterval });
+  componentDidMount() {
+    const users = [
+      {
+        name: "Karabaev.U",
+        model: "Lexux",
+        number: "0657",
+      },
+      {
+        name: "Fayzullaev.N",
+        model: "Tayota",
+        number: "4519",
+      },
+      {
+        name: "Rejabaliev.U",
+        model: "BMW",
+        number: "0205",
+      },
+    ];
+    this.setState({ users: users });
+  }
+
+  deleteUser = (index) => {
+    let newUsers = this.state.users;
+    newUsers.splice(index, 1);
+    this.setState({ users: newUsers });
   };
 
-  clickStop = () => {
-    clearInterval(this.state.timeInterval);
-    this.setState({ startIsDisabled: false });
-  };
-
-  clickInterval = () => {
-    const { second, minute, hour, intervals } = this.state;
-    intervals.push(`${hour}:${minute}:${second}`);
+  addUser = () => {
+    const {name ,model,number,users} = this.state;
+    let newUser = {
+      name,
+      model,
+      number
+    }
+    users.push(newUser);
     this.setState({
-      intervals,
-    });
+      users,
+      name: "",
+      model: "",
+      number: "",
+    })
+
   };
 
-  clickClear = () => {
-    this.clickStop();
-    this.setState({
-      second: 0,
-      minute: 0,
-      hour: 0,
-      intervals: [],
-      startIsDisabled: false,
+  handleInput = (e) => {
+    this.setState({ 
+      [e.target.name]: e.target.value
     });
-    clearInterval(this.state.timeInterval);
-  };
+  }
+
+
 
   render() {
-    const { second, minute, hour, startIsDisabled, intervals } = this.state;
-
+    const { users } = this.state;
     return (
-      <div className="App">
-        <div className="container">
-          <h1 className="title text-center my-5 fs-1 text-warning fw-bold">
-            My Stopwatch
-          </h1>
-          <div className="stopwatch mx-auto p-2">
-            <div className="stopwatch__header">
-              <div className="stopwatch__header-item">{hour}</div>
-              <span>:</span>
-              <div className="stopwatch__header-item">{minute}</div>
-              <span>:</span>
-              <div className="stopwatch__header-item second">{second}</div>
+      <div className="container">
+        <div className="radar m-4">
+          <h1 className="text-center mb-5">Radar </h1>
+
+          <h2 className="text-left mb-4">Yangi Qo'shish:</h2>
+          <div className="row radar__header d-flex align-items-end">
+            <div className="col-3">
+              <label className="mb-2 fs-5" htmlFor="name">
+                Ism va familiyasi:
+              </label>
+              <input
+                value={this.state.name}
+                onChange={this.handleInput}
+                type="text"
+                className="form-control"
+                name="name"
+                id="name"
+              />
             </div>
-            <div className="stopwatch__body">
-              <div className="stopwatch__intervals">
-                {intervals.map((item, index) => {
+            <div className="col-3">
+              <label className="mb-2 fs-5" htmlFor="model">
+                Modeli:
+              </label>
+              <input
+                value={this.state.model}
+                onChange={this.handleInput}
+                type="text"
+                className="form-control"
+                name="model"
+                id="model"
+              />
+            </div>
+            <div className="col-3">
+              <label className="mb-2 fs-5" htmlFor="number">
+                Raqami:
+              </label>
+              <input
+                value={this.state.number}
+                onChange={this.handleInput}
+                type="text"
+                className="form-control"
+                name="number"
+                id="number"
+              />
+            </div>
+            <div className="col-3">
+              <button onClick={this.addUser} className="btn btn-primary">
+                Qo'shish
+              </button>
+            </div>
+          </div>
+
+          <div className="row radar__body">
+            <table className="table table-hover table-striped mt-5">
+              <thead className="table-dark">
+                <tr>
+                  <th>№</th>
+                  <th>Ism va familiyasi</th>
+                  <th>Modeli</th>
+                  <th>Raqami</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {users.map((user, index) => {
+                  const { name, model, number } = user;
                   return (
-                    <div className="stopwatch__interval-item" key={index}>
-                      {item}
-                    </div>
+                    <User
+                      key={index}
+                      listNumber={index}
+                      name={name}
+                      model={model}
+                      number={number}
+                      deleteUser={this.deleteUser}
+                    />
                   );
                 })}
-              </div>
-              <div className="stopwatch__buttons mt-3 mb-5">
-                <button
-                  className="btn btn-primary"
-                  disabled={startIsDisabled}
-                  onClick={this.clickStart}
-                >
-                  Start
-                </button>
-                <button
-                  className="btn btn-danger"
-                  onClick={this.clickStop}
-                  disabled={!startIsDisabled}
-                >
-                  Stop
-                </button>
-                <button
-                  className="btn btn-success"
-                  disabled={!startIsDisabled}
-                  onClick={this.clickInterval}
-                >
-                  Interval
-                </button>
-                <button className="btn btn-dark" onClick={this.clickClear}>
-                  Clear
-                </button>
-              </div>
-            </div>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
