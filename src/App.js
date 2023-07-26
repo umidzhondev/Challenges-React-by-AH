@@ -1,118 +1,176 @@
 import React from "react";
+import PlayerModal from "./components/PlayerModal";
 
 class App extends React.Component {
   state = {
-    second: 0,
-    minute: 0,
-    hour: 0,
-    timeInterval: "",
-    startIsDisabled: false,
-    intervals: [],
+    players: [],
+    modalVisibility: false,
+    currentData: "",
+
   };
 
-  clickStart = () => {
-    this.setState({ startIsDisabled: true });
-    let timeInterval = setInterval(() => {
-      const { second, minute, hour } = this.state;
-      if (second === 59) {
-        if (minute === 59) {
-          this.setState({
-            minute: 0,
-            hour: hour + 1,
-          });
-        } else {
-          this.setState({
-            second: 0,
-            minute: minute + 1,
-          });
+  componentDidMount() {
+    const players = [
+      {
+        firstName: "Mbappe",
+        age: 23,
+        club: "PSJ",
+        value: 160,
+      },
+      {
+        firstName: "Sallah",
+        age: 28,
+        club: "Liverpool",
+        value: 100,
+      },
+      {
+        firstName: "Lukaku",
+        age: 29,
+        club: "Chelsea",
+        value: 100,
+      },
+      {
+        firstName: "Neymar",
+        age: 28,
+        club: "PSJ",
+        value: 90,
+      },
+    ];
+
+    this.setState({
+      players: players,
+    });
+  }
+
+  removePlayer = (index) => {
+    const players = this.state.players;
+    players.splice(index, 1);
+    this.setState({
+      players,
+    });
+  };
+
+  openModal = () => {
+    this.setState({
+      modalVisibility: true,
+    });
+  };
+  hideModal = () => {
+    this.setState({
+      modalVisibility: false,
+    });
+  };
+
+
+  changeCurrentData = (type, isInc) => {
+    const newCurrentData = this.state.currentData
+      ? this.state.currentData
+      : { firstName: "None", age: 0, club: "none", value: 0 };
+
+      if(type === "age"){
+        if(isInc){
+          newCurrentData.age++
+        }else if(newCurrentData.age < 1){
+          newCurrentData.age = 0
         }
-      } else {
-        this.setState({
-          second: second + 1,
-        });
+        else{
+          newCurrentData.age--;
+        }
       }
-    }, 100);
-    this.setState({ timeInterval });
+      
+      if(type === "value"){
+        if(isInc){
+          newCurrentData.value++
+        }else if(newCurrentData.value < 1){
+          newCurrentData.value = 0
+        }
+        else{
+          newCurrentData.value--;
+        }
+      }
+
+      this.setState({
+        currentData: newCurrentData
+      })
   };
 
-  clickStop = () => {
-    clearInterval(this.state.timeInterval);
-    this.setState({ startIsDisabled: false });
-  };
-
-  clickInterval = () => {
-    const { second, minute, hour, intervals } = this.state;
-    intervals.push(`${hour}:${minute}:${second}`);
+  saveChanges = () => {
+    const {players,currentData} = this.state;
+    players.push(currentData);
+    currentData.firstName = "Player"
     this.setState({
-      intervals,
-    });
-  };
+      players,
+      modalVisibility:false
+    })
+  }
 
-  clickClear = () => {
-    this.clickStop();
+  clearCurrentData = () => {
     this.setState({
-      second: 0,
-      minute: 0,
-      hour: 0,
-      intervals: [],
-      startIsDisabled: false,
-    });
-    clearInterval(this.state.timeInterval);
-  };
+      currentData: ''
+    })
+  }
 
   render() {
-    const { second, minute, hour, startIsDisabled, intervals } = this.state;
-
+    const { players, modalVisibility, currentData } = this.state;
     return (
-      <div className="App">
+      <div className="market">
         <div className="container">
-          <h1 className="title text-center my-5 fs-1 text-warning fw-bold">
-            My Stopwatch
-          </h1>
-          <div className="stopwatch mx-auto p-2">
-            <div className="stopwatch__header">
-              <div className="stopwatch__header-item">{hour}</div>
-              <span>:</span>
-              <div className="stopwatch__header-item">{minute}</div>
-              <span>:</span>
-              <div className="stopwatch__header-item second">{second}</div>
+          <h1>⚽ TRANSFER market</h1>
+          <div className="row">
+            <div className="col">
+              <button onClick={this.openModal} className="btn btn-primary m-2">
+                Add a player
+              </button>
+              {modalVisibility ? (
+                <PlayerModal
+                  hideModal={this.hideModal}
+                  currentData={currentData}
+                  changeCurrentData={this.changeCurrentData}
+                  saveChanges={this.saveChanges}
+                  clearCurrentData={this.clearCurrentData}
+                />
+              ) : null}
             </div>
-            <div className="stopwatch__body">
-              <div className="stopwatch__intervals">
-                {intervals.map((item, index) => {
-                  return (
-                    <div className="stopwatch__interval-item" key={index}>
-                      {item}
-                    </div>
-                  );
-                })}
-              </div>
-              <div className="stopwatch__buttons mt-3 mb-5">
-                <button
-                  className="btn btn-primary"
-                  disabled={startIsDisabled}
-                  onClick={this.clickStart}
-                >
-                  Start
-                </button>
-                <button
-                  className="btn btn-danger"
-                  onClick={this.clickStop}
-                  disabled={!startIsDisabled}
-                >
-                  Stop
-                </button>
-                <button
-                  className="btn btn-success"
-                  disabled={!startIsDisabled}
-                  onClick={this.clickInterval}
-                >
-                  Interval
-                </button>
-                <button className="btn btn-dark" onClick={this.clickClear}>
-                  Clear
-                </button>
-              </div>
+          </div>
+          <div className="row">
+            <div className="col">
+              <table className="table table-sm table-hover">
+                <thead className="thead-light">
+                  <tr>
+                    <th>№</th>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Club</th>
+                    <th>Market Value</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {players.map((item, index) => {
+                    return (
+                      <tr key={index}>
+                        <td>{index + 1}</td>
+                        <td>{item.firstName}</td>
+                        <td>{item.age}</td>
+                        <td>{item.club}</td>
+                        <td>
+                          <span className="badge bg-primary">
+                            💰${item.value}.00m
+                          </span>
+                        </td>
+                        <td>
+                          <button
+                            onClick={() => this.removePlayer(index)}
+                            className="btn btn-danger btn-sm"
+                          >
+                            Remove
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
