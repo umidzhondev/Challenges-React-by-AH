@@ -2,9 +2,36 @@ body{
     background: #2859a7;
 }
 
-.radar{
-    background-color: #fff;
-    margin: 15px;
-    border-radius: 12px;
-    padding: 30px 60px;
+.contact{
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
+
+.contact-card{
+    background-color: #fff;
+    max-width: 600px;
+    width: 100%;
+}
+
+
+.contact-title{
+    text-align: center;
+    background-color: #000;
+}
+
+.contact-title h2{
+    padding: 1rem 2rem;
+    color: #fff;
+}
+.contact-form{
+    padding: 1.5rem 1.5rem 2rem 0.25rem;
+    background-color: #fff;
+    text-align: justify;
+    display: flex;
+    align-items: center;
+    width: 100% !important;
+    justify-content: center;
+}
+
