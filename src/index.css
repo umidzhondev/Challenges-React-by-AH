@@ -1,37 +1,165 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 body{
-    background: #2859a7;
-}
-
-.contact{
-    height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
+    background: #0e1538;
+    font-family: Arial, Helvetica, sans-serif;
+    column-rule: #0e1538;
 }
 
-.contact-card{
+.movies{
+    display: flex;
+    flex-wrap: wrap;
+    width: 90%;
+    justify-content: center;
+    margin: 0 auto;
+    gap: 10px;
+}
+.card{
+    border-radius: 8px;
+    overflow: hidden;
     background-color: #fff;
-    max-width: 600px;
+    margin: 10px;
+    width: 250px;
+    height: 510px;
+}
+
+.card__info{
+    padding: 0 0.5rem;
+}
+.card__info p{
+    margin: 12px 0;
+}
+
+.card__img img{
+    height: 370px;
     width: 100%;
+    cursor: pointer;
+    transition: .15s linear all;
+}
+.card:hover .card__img img{
+    transform: scale(1.1);
+}
+.card__info h2{
+    font-size: 24px !important;
 }
 
-
-.contact-title{
-    text-align: center;
-    background-color: #000;
+header{
+    height: 70vh;
 }
 
-.contact-title h2{
-    padding: 1rem 2rem;
-    color: #fff;
-}
-.contact-form{
-    padding: 1.5rem 1.5rem 2rem 0.25rem;
-    background-color: #fff;
-    text-align: justify;
+.header__nav{
+    height: 10vh;
     display: flex;
     align-items: center;
-    width: 100% !important;
-    justify-content: center;
+    justify-content: space-around;
+    padding: 2rem;
+}
+.brand__logo{
+    font-size: 24px !important;
+    color: #fff;
+    text-decoration: none;
+}
+.header__nav ul {
+    display: flex;
+
+}
+.header__nav ul li {
+    list-style: none;
+
+}
+.header__nav ul li a{
+    color: #fff;
+    text-decoration: none;
+    margin-left: 25px;
 }
 
+.main-head{
+    height: 65vh;
+    width: 100vw;
+    clip-path: polygon(0 0, 100% 0, 100% 92%, 0% 100%);
+    background: linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.7)), url('https://c4.wallpaperflare.com/wallpaper/296/400/37/movie-avengers-infinity-war-black-panther-movie-black-widow-wallpaper-preview.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.main-head img{
+    margin: 0 auto;
+    width: 84px;
+    transition: .15s linear all;
+}
+
+
+.main-head img:hover{
+    transform: scale(1.1);
+}
+
+.search svg path{
+    fill: #252525;
+}
+.search{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    z-index: 999;
+    position: relative;
+    height: 46px;
+    margin: 50px 0 20px 0;
+}
+.search input{
+    border: none;
+    outline: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    width: 300px;
+    font-size: 18px;
+    font-family:'Jerbrains Mono',sans-serif !important;
+    height: 100%;
+}
+.search button {
+    border-radius: 5px;
+    background-color: #fff;
+    width: 50px;
+    padding: 8px;
+    height: 100%;
+}
+
+.search svg{
+    width: 100%;
+    height: 100%;
+}
+
+.search__toggles{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    background-color: #fff;
+    width: 300px;
+    border-radius: 6px;
+    padding: 6px 5px;
+    margin: 0px auto 50px auto;
+    cursor: pointer;
+
+}
+.search__toggle{
+    display: flex;
+    flex-direction: column;
+    color: #222;
+    padding: 3px;
+    gap: 6px;
+    cursor: pointer !important;
+}
+label {
+    cursor: pointer !important;
+}
